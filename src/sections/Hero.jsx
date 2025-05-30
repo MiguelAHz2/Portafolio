@@ -16,11 +16,17 @@ import {
 const Hero = () => {
   return (
     <section name="home" className="min-h-screen flex items-center justify-center relative overflow-hidden
-      bg-gradient-to-b from-background-light to-surface-light dark:from-background-dark dark:to-surface-dark">
+      bg-gradient-to-b from-background-light via-background-light to-surface-light/95
+      dark:from-background-dark dark:via-[#1a1f2e] dark:to-surface-dark/95
+      transition-colors-transform duration-600 ease-smooth">
       
       {/* Efectos de fondo */}
-      <div className="bg-gradient-blur bg-gradient-primary w-[500px] h-[500px] top-0 left-0" />
-      <div className="bg-gradient-blur bg-gradient-secondary w-[500px] h-[500px] bottom-0 right-0" />
+      <div className="bg-gradient-blur bg-gradient-primary w-[500px] h-[500px] top-0 left-0 opacity-10 dark:opacity-5" />
+      <div className="bg-gradient-blur bg-gradient-secondary w-[500px] h-[500px] bottom-0 right-0 opacity-10 dark:opacity-5" />
+      
+      {/* Bordes difuminados */}
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-surface-light/10 to-transparent backdrop-blur-[1px]
+        dark:from-surface-dark/5 dark:to-transparent pointer-events-none" />
 
       <motion.div
         variants={containerVariants}

@@ -12,9 +12,10 @@ const App = () => {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+        <div className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark
+          transition-colors-transform duration-600 ease-smooth">
           <Navbar />
-          <main>
+          <main className="transition-colors-transform duration-600 ease-smooth">
             <Hero />
             <About />
             <Projects />
