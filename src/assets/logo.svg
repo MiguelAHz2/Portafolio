@@ -1,0 +1,74 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Contenedor hexagonal (representando un átomo/nodo de desarrollo) -->
+  <path
+    d="M20 4L34 12V28L20 36L6 28V12L20 4Z"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    className="text-primary-500 dark:text-primary-400"
+    fill="none"
+  />
+
+  <!-- Letra M -->
+  <path
+    d="M8 28L8 12L16 24L24 12L24 28"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-gray-800 dark:text-white"
+  />
+
+  <!-- Letra A -->
+  <path
+    d="M28 28L32 12L36 28M29 22H35"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-primary-500 dark:text-primary-400"
+  />
+
+  <!-- Punto central (representando el punto de conexión) -->
+  <circle
+    cx="20"
+    cy="20"
+    r="1.5"
+    fill="currentColor"
+    className="text-primary-500 dark:text-primary-400"
+  />
+
+  <!-- Líneas de conexión (estilo tech) -->
+  <path
+    d="M20 10L24 12M20 10L16 12"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    className="text-gray-400 dark:text-gray-500"
+  />
+  
+  <path
+    d="M20 30L24 28M20 30L16 28"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    className="text-gray-400 dark:text-gray-500"
+  />
+
+  <!-- Elementos de código -->
+  <path
+    d="M4 20L6 20M38 20L40 20"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    className="text-gray-400 dark:text-gray-500"
+  />
+
+  <!-- Elemento decorativo inferior -->
+  <path
+    d="M12 32L32 32"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    className="text-gray-400 dark:text-gray-500"
+  />
+</svg> 
