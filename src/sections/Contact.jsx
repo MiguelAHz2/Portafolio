@@ -107,7 +107,7 @@ const Contact = () => {
             variants={descriptionVariants}
             className="section-subtitle text-base sm:text-lg max-w-2xl mx-auto px-4 sm:px-6"
           >
-            ¿Tienes un proyecto en mente? ¡Hablemos sobre cómo puedo ayudarte!
+            ¿Tienes un proyecto en mente? ¡Escríbeme y colaboramos!
           </motion.p>
         </div>
 
