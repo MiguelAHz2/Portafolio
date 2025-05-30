@@ -46,7 +46,7 @@ export const projects = [
   {
     title: "Scripts",
     description: "Sistema de scripts para automatizar tareas en mi trabajo.",
-    image: "/public/Scripts.png",
+    image: "/Scripts.png",
     technologies: ["HTML", "CSS", "JavaScript"],
     github: "https://github.com/MiguelAHz2/Script-Remaster",
     live: "https://script-remaster.vercel.app/"
@@ -54,7 +54,7 @@ export const projects = [
   {
     title: "Gestión de proyectos",
     description: "Con esta aplicación web, puedes gestionar tus proyectos de manera eficiente. (En desarrollo)",
-    image: "/public/gestorproyectos.png",
+    image: "/gestorproyectos.png",
     technologies: ["Python", "Flask", "PostgreSQL"],
     github: "https://github.com/MiguelAHz2/PruebaPython",
     live: "https://gestion-proyectos-th6k.onrender.com/"
