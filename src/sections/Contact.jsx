@@ -13,6 +13,7 @@ import {
   smoothTransition
 } from '../constants/animations';
 import { HiMail, HiPhone, HiLocationMarker } from 'react-icons/hi';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const ContactInfo = ({ icon: Icon, title, content }) => (
   <motion.div
@@ -111,7 +112,7 @@ const Contact = () => {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           <ContactCard
             icon={HiMail}
             title="Email"
@@ -123,6 +124,12 @@ const Contact = () => {
             title="Teléfono"
             value={contactInfo.phone}
             link={`tel:${contactInfo.phone}`}
+          />
+          <ContactCard
+            icon={FaWhatsapp}
+            title="WhatsApp"
+            value={contactInfo.phone}
+            link={`https://wa.me/${contactInfo.phone.replace(/[^0-9]/g, '')}`}
           />
           <ContactCard
             icon={HiLocationMarker}

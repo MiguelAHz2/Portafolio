@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
-import { FaGithub, FaLinkedin, FaHeart, FaCode } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaHeart, FaCode, FaWhatsapp } from 'react-icons/fa';
 import { HiMail } from 'react-icons/hi';
-import { socialLinks } from '../constants/portfolio';
+import { socialLinks, contactInfo } from '../constants/portfolio';
 import {
   containerVariants,
   fromLeftVariants,
@@ -79,6 +79,10 @@ const Footer = () => {
           <SocialIcon 
             href={`https://mail.google.com/mail/?view=cm&fs=1&to=${socialLinks.email}`} 
             icon={HiMail} 
+          />
+          <SocialIcon 
+            href={`https://wa.me/${contactInfo.phone.replace(/[^0-9]/g, '')}`}
+            icon={FaWhatsapp}
           />
         </motion.div>
 

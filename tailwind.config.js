@@ -17,13 +17,13 @@ export default {
           dark: '#0f172a',
         },
         secondary: {
-          light: '#2563eb',
-          DEFAULT: '#3b82f6',
+          light: '#1d4ed8',
+          DEFAULT: '#2563eb',
           dark: '#60a5fa',
         },
         accent: {
-          light: '#0891b2',
-          DEFAULT: '#06b6d4',
+          light: '#0e7490',
+          DEFAULT: '#0891b2',
           dark: '#22d3ee',
         },
         background: {
@@ -38,8 +38,8 @@ export default {
           darker: '#0f172a',
         },
         text: {
-          light: '#1e293b',
-          muted: '#64748b',
+          light: '#0f172a',
+          muted: '#475569',
           dark: '#f8fafc',
         }
       },
@@ -48,11 +48,11 @@ export default {
         'spin-slow': 'spin 8s linear infinite',
       },
       boxShadow: {
-        'nav': '0 2px 4px 0 rgba(0,0,0,0.05)',
+        'nav': '0 4px 6px -1px rgba(0,0,0,0.1)',
         'nav-dark': '0 2px 4px 0 rgba(0,0,0,0.2)',
-        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'card': '0 4px 6px -1px rgba(15, 23, 42, 0.1), 0 2px 4px -1px rgba(15, 23, 42, 0.06)',
         'card-dark': '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.18)',
-        'hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'hover': '0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -2px rgba(15, 23, 42, 0.05)',
         'hover-dark': '0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
       },
       backgroundImage: {

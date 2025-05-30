@@ -225,47 +225,28 @@ const Projects = () => {
                     opacity-0 group-hover:opacity-100 transition-all duration-500 
                     ${project.title === "Próximamente" ? "h-full" : ""}`}>
                     {/* Contenido con animación */}
-                    <div className={`absolute inset-0 p-4 sm:p-6 flex flex-col justify-end transform translate-y-4 
+                    <div className={`absolute inset-0 p-4 sm:p-6 flex flex-col transform translate-y-4 
                       group-hover:translate-y-0 transition-transform duration-500 
                       ${project.title === "Próximamente" ? "justify-center items-center text-center" : "justify-end"}`}>
                       <div className={`bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-white/10
-                        ${project.title === "Próximamente" ? "w-full max-w-md bg-transparent backdrop-blur-none border-none" : ""}`}>
+                        ${project.title === "Próximamente" ? "w-full max-w-md bg-transparent backdrop-blur-none border-none" : "w-full"}`}>
                         {project.title !== "Próximamente" && (
-                          <h3 className="text-sm sm:text-base font-bold text-white mb-1">
-                            {project.title}
-                          </h3>
+                          <>
+                            <h3 className="text-sm font-bold text-white mb-1.5">
+                              {project.title}
+                            </h3>
+                            <p className="text-xs text-gray-200 leading-relaxed
+                              overflow-y-auto max-h-[60px]
+                              scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent 
+                              hover:scrollbar-thumb-white/30 pr-1">
+                              {project.description}
+                            </p>
+                          </>
                         )}
-                        <p className={`text-xs sm:text-sm text-gray-200 leading-relaxed
-                          ${project.title === "Próximamente" ? "max-h-none font-light tracking-wide" : "overflow-y-auto max-h-[45px] sm:max-h-[60px] mb-2"}
-                          scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/30 
-                          pr-1`}>
-                          {project.description}
-                        </p>
-                        
-                        {/* Enlaces con efecto hover - Solo para proyectos normales */}
-                        {project.title !== "Próximamente" && (
-                          <div className="flex items-center gap-1.5">
-                            <motion.a
-                              href={project.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              whileHover={{ scale: 1.1 }}
-                              className="p-1 bg-white/10 rounded-full hover:bg-white/20 transition-colors
-                              hover:shadow-lg hover:shadow-white/10"
-                            >
-                              <FaGithub className="w-3.5 h-3.5 text-white" />
-                            </motion.a>
-                            <motion.a
-                              href={project.live}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              whileHover={{ scale: 1.1 }}
-                              className="p-1 bg-white/10 rounded-full hover:bg-white/20 transition-colors
-                              hover:shadow-lg hover:shadow-white/10"
-                            >
-                              <FaExternalLinkAlt className="w-3 h-3 text-white" />
-                            </motion.a>
-                          </div>
+                        {project.title === "Próximamente" && (
+                          <p className="text-xs text-gray-200 leading-relaxed">
+                            {project.description}
+                          </p>
                         )}
                       </div>
                     </div>

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import { HiMail } from 'react-icons/hi';
-import { socialLinks } from '../constants/portfolio';
+import { socialLinks, contactInfo } from '../constants/portfolio';
 import {
   containerVariants,
   titleVariants,
@@ -95,6 +95,18 @@ const Hero = () => {
                 hover:border-secondary-light/50 dark:hover:border-secondary-dark/50"
               >
                 <HiMail className="w-5 h-5 sm:w-6 sm:h-6 text-text-light dark:text-text-dark" />
+              </motion.a>
+              <motion.a
+                href={`https://wa.me/${contactInfo.phone.replace(/[^0-9]/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={hoverScale}
+                transition={smoothTransition}
+                className="p-3 sm:p-4 bg-white/5 backdrop-blur-sm rounded-full
+                hover:bg-white/10 transition-all duration-300 border border-white/10
+                hover:border-secondary-light/50 dark:hover:border-secondary-dark/50"
+              >
+                <FaWhatsapp className="w-5 h-5 sm:w-6 sm:h-6 text-text-light dark:text-text-dark" />
               </motion.a>
             </motion.div>
           </motion.div>
