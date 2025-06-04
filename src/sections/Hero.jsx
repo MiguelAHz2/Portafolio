@@ -145,7 +145,7 @@ const Hero = () => {
                   >
                     <img 
                       src="/image.jpg" 
-                      alt="Miguel Alvarez" 
+                      alt="Miguel Alvarez"
                       className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-black/10 dark:bg-black/30 group-hover:bg-black/0 transition-colors duration-300" />

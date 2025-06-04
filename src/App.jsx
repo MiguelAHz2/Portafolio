@@ -83,12 +83,12 @@ const App = () => {
           </svg>
           <Navbar />
           <main className="transition-colors-transform duration-600 ease-smooth relative z-10">
-            <Hero />
-            <About />
-            <Projects />
-            <Contact />
+              <Hero />
+              <About />
+              <Projects />
+              <Contact />
           </main>
-          <Footer />
+            <Footer />
         </div>
       </LanguageProvider>
     </ThemeProvider>

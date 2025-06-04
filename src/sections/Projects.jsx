@@ -108,100 +108,88 @@ const Projects = () => {
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-surface-light/10 to-transparent backdrop-blur-[1px]
         dark:from-surface-dark/5 dark:to-transparent pointer-events-none" />
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.2 }}
-        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
-      >
-        <motion.h2
-          variants={titleVariants}
-          className="section-title text-center text-3xl sm:text-4xl lg:text-5xl mb-12 sm:mb-16"
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
         >
-          Mis Proyectos
-        </motion.h2>
+          <motion.h2
+            variants={titleVariants}
+            className="section-title text-center text-3xl sm:text-4xl lg:text-5xl mb-12 sm:mb-16"
+          >
+            Mis Proyectos
+          </motion.h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              variants={cardVariants}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.title}
+                variants={cardVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
-              whileHover={hoverScale}
-              transition={smoothTransition}
-              className="card overflow-hidden group bg-white/5 backdrop-blur-sm border border-white/10
-              hover:border-secondary-light/50 dark:hover:border-secondary-dark/50 transition-all duration-300"
-            >
-              {/* Contenedor de la imagen con marco y sombra */}
-              <div className={`relative overflow-hidden ${project.title === "Próximamente" ? "h-full" : ""}`}>
-                {/* Overlay decorativo superior */}
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                
-                {/* Contenedor de la imagen con proporción fija */}
-                <div className={`relative ${project.title === "Próximamente" ? "h-full" : "aspect-[16/9]"} overflow-hidden`}>
+                whileHover={hoverScale}
+                transition={smoothTransition}
+                className="card overflow-hidden group bg-white/5 backdrop-blur-sm border border-white/10
+                hover:border-secondary-light/50 dark:hover:border-secondary-dark/50 transition-all duration-300"
+              >
+                {/* Contenedor de la imagen con marco y sombra */}
+                <div className={`relative overflow-hidden ${project.title === "Próximamente" ? "h-full" : ""}`}>
+                  {/* Overlay decorativo superior */}
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                  
+                  {/* Contenedor de la imagen con proporción fija */}
+                  <div className={`relative ${project.title === "Próximamente" ? "h-full" : "aspect-[16/9]"} overflow-hidden`}>
                   {/* Imagen con efecto de zoom */}
-                  {project.title === "Próximamente" ? (
-                    <div className="w-full h-full min-h-[250px] bg-gradient-to-br from-primary-500/5 to-secondary-500/5 
-                      dark:from-primary-400/5 dark:to-secondary-400/5 flex items-center justify-center relative overflow-hidden">
-                      <motion.div
-                        animate={{
-                          y: [0, -5, 0],
-                          opacity: [0.9, 1, 0.9]
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                        className="absolute inset-0 flex items-center justify-center"
-                      >
-                        <div className="relative">
-                          {/* Línea circular exterior */}
-                          <div className="w-44 h-44 rounded-full border border-secondary-light/10 
-                            dark:border-secondary-dark/10" />
-                          
-                          {/* Arco giratorio */}
-                          <motion.div 
-                            className="absolute inset-0 w-44 h-44"
-                            animate={{
-                              rotate: 360
-                            }}
-                            transition={{
-                              duration: 8,
-                              repeat: Infinity,
-                              ease: "linear"
-                            }}
-                          >
-                            <div className="w-full h-full rounded-full border-2 border-transparent
-                              border-t-secondary-light/30 dark:border-t-secondary-dark/30" />
-                          </motion.div>
-
-                          {/* Círculo central con efecto minimalista */}
-                          <div className="absolute inset-0 flex items-center justify-center">
+                    {project.title === "Próximamente" ? (
+                      <div className="w-full h-full min-h-[250px] bg-gradient-to-br from-primary-500/5 to-secondary-500/5 
+                        dark:from-primary-400/5 dark:to-secondary-400/5 flex items-center justify-center relative overflow-hidden">
+                        <motion.div
+                          animate={{
+                            y: [0, -5, 0],
+                            opacity: [0.9, 1, 0.9]
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                          className="absolute inset-0 flex items-center justify-center"
+                        >
+                          <div className="relative">
+                            {/* Línea circular exterior */}
+                            <div className="w-44 h-44 rounded-full border border-secondary-light/10 
+                              dark:border-secondary-dark/10" />
+                            
+                            {/* Arco giratorio */}
                             <motion.div 
-                              className="w-36 h-36 rounded-full bg-white/5 dark:bg-black/5 backdrop-blur-sm
-                              flex items-center justify-center border border-white/10 dark:border-white/5"
+                              className="absolute inset-0 w-44 h-44"
                               animate={{
-                                boxShadow: [
-                                  "0 0 0 0 rgba(37, 99, 235, 0)",
-                                  "0 0 20px 2px rgba(37, 99, 235, 0.1)",
-                                  "0 0 0 0 rgba(37, 99, 235, 0)"
-                                ]
+                                rotate: 360
                               }}
                               transition={{
-                                duration: 3,
+                                duration: 8,
                                 repeat: Infinity,
-                                ease: "easeInOut"
+                                ease: "linear"
                               }}
                             >
-                              <motion.span 
-                                className="text-xl font-light tracking-wide text-secondary-light/70
-                                dark:text-secondary-dark/70 italic"
+                              <div className="w-full h-full rounded-full border-2 border-transparent
+                                border-t-secondary-light/30 dark:border-t-secondary-dark/30" />
+                            </motion.div>
+
+                            {/* Círculo central con efecto minimalista */}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <motion.div 
+                                className="w-36 h-36 rounded-full bg-white/5 dark:bg-black/5 backdrop-blur-sm
+                                flex items-center justify-center border border-white/10 dark:border-white/5"
                                 animate={{
-                                  opacity: [0.7, 1, 0.7]
+                                  boxShadow: [
+                                    "0 0 0 0 rgba(37, 99, 235, 0)",
+                                    "0 0 20px 2px rgba(37, 99, 235, 0.1)",
+                                    "0 0 0 0 rgba(37, 99, 235, 0)"
+                                  ]
                                 }}
                                 transition={{
                                   duration: 3,
@@ -209,20 +197,32 @@ const Projects = () => {
                                   ease: "easeInOut"
                                 }}
                               >
+                                <motion.span 
+                                className="text-xl font-light tracking-wide text-secondary-light/70
+                                dark:text-secondary-dark/70 italic"
+                                  animate={{
+                                    opacity: [0.7, 1, 0.7]
+                                  }}
+                                  transition={{
+                                    duration: 3,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                  }}
+                                >
                                 Muy pronto...
-                              </motion.span>
-                            </motion.div>
+                                </motion.span>
+                              </motion.div>
+                            </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  ) : (
+                        </motion.div>
+                      </div>
+                    ) : (
                     <motion.img
                       initial={{ scale: 1 }}
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.4, ease: "easeOut" }}
-                      src={project.image}
-                      alt={project.title}
+                        src={project.image}
+                        alt={project.title}
                       className="w-full h-full object-cover object-center transform"
                     />
                   )}
@@ -240,14 +240,14 @@ const Projects = () => {
                         {project.title !== "Próximamente" && (
                           <>
                             <h3 className="text-sm font-bold text-white mb-1.5">
-                              {project.title}
-                            </h3>
+                      {project.title}
+                    </h3>
                             <p className="text-xs text-gray-200 leading-relaxed
                               overflow-y-auto max-h-[60px]
                               scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent 
                               hover:scrollbar-thumb-white/30 pr-1">
-                              {project.description}
-                            </p>
+                      {project.description}
+                    </p>
                           </>
                         )}
                         {project.title === "Próximamente" && (
@@ -285,10 +285,10 @@ const Projects = () => {
                   </div>
                 </div>
               )}
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
     </section>
   );
 };
