@@ -61,7 +61,7 @@ export default {
         'gradient-subtle': 'linear-gradient(to right, var(--tw-gradient-stops))',
       },
       transitionProperty: {
-        'colors-transform': 'color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter',
+        'colors-transform': 'color, background-color, border-color, text-decoration-color',
       },
       transitionDuration: {
         '400': '400ms',
