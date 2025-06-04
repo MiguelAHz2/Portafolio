@@ -8,6 +8,7 @@
   html {
     font-family: 'Poppins', sans-serif;
     scroll-behavior: smooth;
+    @apply transition-colors duration-300 ease-smooth;
   }
 
   body {
