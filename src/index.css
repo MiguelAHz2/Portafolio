@@ -81,14 +81,6 @@
   dark:from-accent-dark/30 dark:to-secondary-dark/30;
 }
 
-/* Transiciones suaves para el cambio de tema */
-* {
-  transition: background-color 0.3s ease-in-out, 
-              color 0.3s ease-in-out,
-              border-color 0.3s ease-in-out,
-              box-shadow 0.3s ease-in-out;
-}
-
 /* Scrollbar personalizada */
 ::-webkit-scrollbar {
   width: 10px;
