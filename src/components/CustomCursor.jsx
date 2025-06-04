@@ -90,7 +90,17 @@ const CustomCursor = () => {
     };
 
     const handleMouseEnter = (e) => {
-      const isInteractive = e.target.matches('a, button, [role="button"], input, select, textarea, [data-cursor="pointer"]');
+      const target = e.target;
+      const isInteractive = target instanceof Element && (
+        target.tagName.toLowerCase() === 'a' ||
+        target.tagName.toLowerCase() === 'button' ||
+        target.tagName.toLowerCase() === 'input' ||
+        target.tagName.toLowerCase() === 'select' ||
+        target.tagName.toLowerCase() === 'textarea' ||
+        target.getAttribute('role') === 'button' ||
+        target.getAttribute('data-cursor') === 'pointer'
+      );
+      
       isHoveringRef.current = isInteractive;
       
       if (cursorRef.current) {
