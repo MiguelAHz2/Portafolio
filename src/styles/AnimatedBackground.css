@@ -1,0 +1,194 @@
+/* Animated Ultra-Modern Background */
+:root {
+  --grid-color: 30, 30, 30;
+  --accent-color-1: 79, 70, 229; /* Indigo */
+  --accent-color-2: 139, 92, 246; /* Violeta */
+  --accent-color-3: 236, 72, 153; /* Rosa */
+  --accent-color-4: 45, 212, 191; /* Turquesa */
+  --blur-color: 255, 255, 255;
+  --grid-size: 100px;
+  --small-grid-size: 25px;
+  --animation-speed: 1;
+}
+
+[data-theme='dark'] {
+  --grid-color: 200, 200, 200;
+  --accent-color-1: 129, 140, 248; /* Indigo claro */
+  --accent-color-2: 167, 139, 250; /* Violeta claro */
+  --accent-color-3: 244, 114, 182; /* Rosa claro */
+  --accent-color-4: 94, 234, 212; /* Turquesa claro */
+  --blur-color: 0, 0, 0;
+}
+
+.animated-grid-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(
+    165deg,
+    rgba(var(--accent-color-1), 0.03),
+    rgba(var(--accent-color-2), 0.03) 45%,
+    rgba(var(--accent-color-3), 0.03) 75%,
+    rgba(var(--accent-color-4), 0.03)
+  );
+}
+
+/* Sistema de cuadrícula refinado */
+.grid-system {
+  position: absolute;
+  inset: -100%;
+  transform-origin: center;
+  transform: perspective(1000px) rotateX(60deg) scale(2);
+}
+
+/* Cuadrícula principal */
+.main-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(var(--grid-color), 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--grid-color), 0.03) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  animation: grid-float 15s ease-in-out infinite;
+}
+
+/* Cuadrícula secundaria */
+.secondary-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(var(--grid-color), 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--grid-color), 0.015) 1px, transparent 1px);
+  background-size: var(--small-grid-size) var(--small-grid-size);
+  animation: grid-float 12s ease-in-out infinite reverse;
+}
+
+/* Líneas de acento */
+.accent-lines {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(45deg, transparent 0%, transparent 49%, rgba(var(--accent-color-1), 0.02) 50%, transparent 51%),
+    linear-gradient(-45deg, transparent 0%, transparent 49%, rgba(var(--accent-color-2), 0.02) 50%, transparent 51%);
+  background-size: var(--grid-size) var(--grid-size);
+  animation: accent-drift 20s linear infinite;
+}
+
+/* Partículas suavizadas */
+.particles {
+  position: absolute;
+  inset: 0;
+  filter: url('#gooey');
+  opacity: 0.7;
+}
+
+.particle {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(var(--accent-color-1), 0.1),
+    rgba(var(--accent-color-2), 0.05) 50%,
+    transparent 70%
+  );
+  animation: float 20s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+.particle:nth-child(2n) {
+  width: 200px;
+  height: 200px;
+  animation-delay: -7s;
+  background: radial-gradient(
+    circle at center,
+    rgba(var(--accent-color-3), 0.1),
+    rgba(var(--accent-color-4), 0.05) 50%,
+    transparent 70%
+  );
+}
+
+.particle:nth-child(3n) {
+  width: 100px;
+  height: 100px;
+  animation-delay: -14s;
+  background: radial-gradient(
+    circle at center,
+    rgba(var(--accent-color-2), 0.1),
+    rgba(var(--accent-color-3), 0.05) 50%,
+    transparent 70%
+  );
+}
+
+/* Efecto de resplandor radial */
+.radial-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(var(--accent-color-1), 0.08),
+    rgba(var(--accent-color-2), 0.04) 30%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  mix-blend-mode: screen;
+}
+
+/* Capa de desenfoque refinada */
+.blur-overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(80px);
+  pointer-events: none;
+  opacity: 0.15;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(var(--blur-color), 0.1),
+    rgba(var(--blur-color), 0.15)
+  );
+  mix-blend-mode: overlay;
+}
+
+/* Animaciones refinadas */
+@keyframes grid-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(var(--small-grid-size) * 2));
+  }
+}
+
+@keyframes accent-drift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: var(--grid-size) var(--grid-size);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(calc(var(--grid-size) * 0.5), calc(var(--grid-size) * -0.5));
+  }
+  50% {
+    transform: translate(calc(var(--grid-size) * -0.5), calc(var(--grid-size) * 0.5));
+  }
+  75% {
+    transform: translate(calc(var(--grid-size) * 0.5), calc(var(--grid-size) * 0.5));
+  }
+}
+
+/* Filtros SVG */
+.svg-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+} 
