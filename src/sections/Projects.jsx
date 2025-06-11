@@ -142,7 +142,7 @@ const Projects = () => {
                   
                   {/* Contenedor de la imagen con proporción fija */}
                   <div className={`relative ${project.title === "Próximamente" ? "h-full" : "aspect-[16/9]"} overflow-hidden`}>
-                  {/* Imagen con efecto de zoom */}
+                    {/* Imagen con efecto de zoom */}
                     {project.title === "Próximamente" ? (
                       <div className="w-full h-full min-h-[250px] bg-gradient-to-br from-primary-500/5 to-secondary-500/5 
                         dark:from-primary-400/5 dark:to-secondary-400/5 flex items-center justify-center relative overflow-hidden">
@@ -217,74 +217,93 @@ const Projects = () => {
                         </motion.div>
                       </div>
                     ) : (
-                    <motion.img
-                      initial={{ scale: 1 }}
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      <motion.img
+                        initial={{ scale: 1 }}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
                         src={project.image}
                         alt={project.title}
-                      className="w-full h-full object-cover object-center transform"
-                    />
-                  )}
-                  
-                  {/* Overlay con gradiente y contenido */}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/40
-                    opacity-0 group-hover:opacity-100 transition-all duration-500 
-                    ${project.title === "Próximamente" ? "h-full" : ""}`}>
-                    {/* Contenido con animación */}
-                    <div className={`absolute inset-0 p-4 sm:p-6 flex flex-col transform translate-y-4 
-                      group-hover:translate-y-0 transition-transform duration-500 
-                      ${project.title === "Próximamente" ? "justify-center items-center text-center" : "justify-end"}`}>
-                      <div className={`bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-white/10
-                        ${project.title === "Próximamente" ? "w-full max-w-md bg-transparent backdrop-blur-none border-none" : "w-full"}`}>
-                        {project.title !== "Próximamente" && (
-                          <>
-                            <h3 className="text-sm font-bold text-white mb-1.5">
-                      {project.title}
-                    </h3>
-                            <p className="text-xs text-gray-200 leading-relaxed
-                              overflow-y-auto max-h-[60px]
-                              scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent 
-                              hover:scrollbar-thumb-white/30 pr-1">
-                      {project.description}
-                    </p>
-                          </>
-                        )}
-                        {project.title === "Próximamente" && (
-                          <p className="text-xs text-gray-200 leading-relaxed">
+                        className="w-full h-full object-cover object-center transform"
+                      />
+                    )}
+                    
+                    {/* Overlay con gradiente y contenido */}
+                    <div className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/40
+                      opacity-0 group-hover:opacity-100 transition-all duration-500`}>
+                      <div className="absolute inset-0 p-4 sm:p-6 flex flex-col items-center justify-center">
+                        <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-white/10 w-full">
+                          <h3 className="text-sm font-bold text-white mb-1.5 text-center">
+                            {project.title}
+                          </h3>
+                          <p className="text-xs text-gray-200 leading-relaxed text-center">
                             {project.description}
                           </p>
-                        )}
+                        </div>
                       </div>
                     </div>
                   </div>
+
+                  {/* Overlay decorativo inferior */}
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                 </div>
 
-                {/* Overlay decorativo inferior */}
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              </div>
-
-              {/* Sección de tecnologías - Solo mostrar si hay tecnologías y no es el proyecto "Próximamente" */}
-              {project.technologies.length > 0 && project.title !== "Próximamente" && (
-                <div className="p-4 sm:p-6 bg-gradient-to-b from-white/5 to-transparent dark:from-white/5 dark:to-transparent">
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                    {project.technologies.map((tech) => (
-                      <motion.span
-                        key={tech}
-                        whileHover={{ scale: 1.05 }}
-                        transition={smoothTransition}
-                        className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/5 backdrop-blur-sm
-                        text-text-muted dark:text-gray-300 rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
-                        hover:bg-white/10 transition-all duration-300 border border-white/10
-                        hover:border-secondary-light/50 dark:hover:border-secondary-dark/50"
-                      >
-                        {getTechIcon(tech)}
-                        <span className="truncate">{tech}</span>
-                      </motion.span>
-                    ))}
+                {/* Sección de tecnologías */}
+                {project.technologies.length > 0 && project.title !== "Próximamente" && (
+                  <div className="p-4 sm:p-6 bg-gradient-to-b from-white/5 to-transparent dark:from-white/5 dark:to-transparent">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      {project.technologies.map((tech) => (
+                        <motion.span
+                          key={tech}
+                          whileHover={{ scale: 1.05 }}
+                          transition={smoothTransition}
+                          className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/5 backdrop-blur-sm
+                          text-text-muted dark:text-gray-300 rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
+                          hover:bg-white/10 transition-all duration-300 border border-white/10
+                          hover:border-secondary-light/50 dark:hover:border-secondary-dark/50"
+                        >
+                          {getTechIcon(tech)}
+                          <span className="truncate">{tech}</span>
+                        </motion.span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+
+                {/* Enlaces del proyecto */}
+                {project.title !== "Próximamente" && (
+                  <div className="px-4 sm:px-6 pb-4 sm:pb-6 flex gap-2 mt-2">
+                    {project.live && project.live !== "#" && (
+                      <motion.a
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={smoothTransition}
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-700/80 hover:bg-gray-700 
+                        text-white rounded-md text-xs transition-all duration-300 flex-1 justify-center"
+                      >
+                        <FaExternalLinkAlt className="w-3 h-3" />
+                        Ver Proyecto
+                      </motion.a>
+                    )}
+                    {project.github && project.github !== "#" && (
+                      <motion.a
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={smoothTransition}
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-700/80 hover:bg-gray-700 
+                        text-white rounded-md text-xs transition-all duration-300 flex-1 justify-center"
+                      >
+                        <FaGithub className="w-3 h-3" />
+                        Ver Código
+                      </motion.a>
+                    )}
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
