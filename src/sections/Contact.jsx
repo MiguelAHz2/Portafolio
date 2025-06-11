@@ -87,20 +87,20 @@ const Contact = () => {
       dark:from-surface-dark/95 dark:via-[#1a1f2e] dark:to-surface-dark/95"
     >
       {/* Efectos de fondo */}
-      <div className="bg-gradient-blur bg-gradient-primary w-[500px] h-[500px] top-0 left-0 opacity-10 dark:opacity-5" />
-      <div className="bg-gradient-blur bg-gradient-secondary w-[500px] h-[500px] bottom-0 right-0 opacity-10 dark:opacity-5" />
+      <div className="bg-gradient-blur bg-gradient-primary w-[500px] h-[500px] top-0 left-0 opacity-10 dark:opacity-5 hidden sm:block" />
+      <div className="bg-gradient-blur bg-gradient-secondary w-[500px] h-[500px] bottom-0 right-0 opacity-10 dark:opacity-5 hidden sm:block" />
 
       {/* Bordes difuminados */}
       <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-surface-light/10 to-transparent backdrop-blur-[1px]
-        dark:from-surface-dark/5 dark:to-transparent pointer-events-none" />
+        dark:from-surface-dark/5 dark:to-transparent pointer-events-none hidden sm:block" />
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-surface-light/10 to-transparent backdrop-blur-[1px]
-        dark:from-surface-dark/5 dark:to-transparent pointer-events-none" />
+        dark:from-surface-dark/5 dark:to-transparent pointer-events-none hidden sm:block" />
 
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.2 }}
         className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24"
       >
         <div className="text-center mb-12 sm:mb-16">

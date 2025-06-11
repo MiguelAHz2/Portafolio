@@ -51,18 +51,18 @@ const Footer = () => {
     <footer className="bg-gradient-to-b from-surface-light/95 via-background-light to-background-light
       dark:from-surface-dark/95 dark:via-[#1a1f2e] dark:to-background-dark relative overflow-hidden">
       {/* Efectos de fondo */}
-      <div className="bg-gradient-blur bg-gradient-primary w-[300px] h-[300px] -top-40 -right-40 opacity-10 dark:opacity-5" />
-      <div className="bg-gradient-blur bg-gradient-secondary w-[300px] h-[300px] -bottom-40 -left-40 opacity-10 dark:opacity-5" />
+      <div className="bg-gradient-blur bg-gradient-primary w-[300px] h-[300px] -top-40 -right-40 opacity-10 dark:opacity-5 hidden sm:block" />
+      <div className="bg-gradient-blur bg-gradient-secondary w-[300px] h-[300px] -bottom-40 -left-40 opacity-10 dark:opacity-5 hidden sm:block" />
 
       {/* Bordes difuminados */}
       <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-surface-light/10 to-transparent backdrop-blur-[1px]
-        dark:from-surface-dark/5 dark:to-transparent pointer-events-none" />
+        dark:from-surface-dark/5 dark:to-transparent pointer-events-none hidden sm:block" />
 
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.2 }}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10"
       >
         <motion.div

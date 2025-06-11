@@ -46,7 +46,7 @@ const App = () => {
         <div className={`min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark
           selection:bg-primary-500/20 selection:text-primary-500 dark:selection:bg-primary-400/20 dark:selection:text-primary-400`}>
           <CustomCursor />
-          <div className="animated-grid-background">
+          <div className="animated-grid-background hidden sm:block">
             <div className="grid-system">
               <div className="main-grid" />
               <div className="secondary-grid" />
@@ -83,12 +83,12 @@ const App = () => {
           </svg>
           <Navbar />
           <main className="relative z-10">
-              <Hero />
-              <About />
-              <Projects />
-              <Contact />
+            <Hero />
+            <About />
+            <Projects />
+            <Contact />
           </main>
-            <Footer />
+          <Footer />
         </div>
       </LanguageProvider>
     </ThemeProvider>
