@@ -60,6 +60,14 @@ export const projects = [
     live: "https://gestion-proyectos-th6k.onrender.com/"
   },
   {
+    title: "API - Dragon Ball",
+    description: "Aplicación que muestra información detallada sobre los personajes de Dragon Ball.",
+    image: "/dbcard.png",
+    technologies: ["React", "TypeScript", "Material UI"],
+    github: "https://github.com/MiguelAHz2/DBCards",
+    live: "https://db-cards.vercel.app/"
+  },
+  {
     title: "Próximamente",
     description: "¡Nuevos proyectos en desarrollo! Estoy trabajando en proyectos grandiosos que pronto compartiré en este espacio. ¡Mantente atento!",
     image: "/coming-soon.jpg",
