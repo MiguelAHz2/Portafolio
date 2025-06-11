@@ -43,8 +43,8 @@ const App = () => {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark
-          transition-colors-transform duration-600 ease-smooth">
+        <div className={`min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark
+          selection:bg-primary-500/20 selection:text-primary-500 dark:selection:bg-primary-400/20 dark:selection:text-primary-400`}>
           <CustomCursor />
           <div className="animated-grid-background">
             <div className="grid-system">
@@ -82,7 +82,7 @@ const App = () => {
             </defs>
           </svg>
           <Navbar />
-          <main className="transition-colors-transform duration-600 ease-smooth relative z-10">
+          <main className="relative z-10">
               <Hero />
               <About />
               <Projects />

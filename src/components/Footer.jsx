@@ -49,8 +49,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-gradient-to-b from-surface-light/95 via-background-light to-background-light
-      dark:from-surface-dark/95 dark:via-[#1a1f2e] dark:to-background-dark relative overflow-hidden
-      transition-colors-transform duration-600 ease-smooth">
+      dark:from-surface-dark/95 dark:via-[#1a1f2e] dark:to-background-dark relative overflow-hidden">
       {/* Efectos de fondo */}
       <div className="bg-gradient-blur bg-gradient-primary w-[300px] h-[300px] -top-40 -right-40 opacity-10 dark:opacity-5" />
       <div className="bg-gradient-blur bg-gradient-secondary w-[300px] h-[300px] -bottom-40 -left-40 opacity-10 dark:opacity-5" />

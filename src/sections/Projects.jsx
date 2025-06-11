@@ -95,8 +95,7 @@ const Projects = () => {
     <section
       name="projects"
       className="section-container bg-gradient-to-b from-surface-light/95 via-background-light to-surface-light/95
-      dark:from-surface-dark/95 dark:via-[#1a1f2e] dark:to-surface-dark/95
-      transition-colors-transform duration-600 ease-smooth"
+      dark:from-surface-dark/95 dark:via-[#1a1f2e] dark:to-surface-dark/95"
     >
       {/* Efectos de fondo */}
       <div className="bg-gradient-blur bg-gradient-primary w-[500px] h-[500px] top-0 left-0 opacity-10 dark:opacity-5" />

@@ -17,8 +17,7 @@ const Hero = () => {
   return (
     <section name="home" className="min-h-screen flex items-center justify-center relative overflow-hidden
       bg-gradient-to-b from-background-light via-background-light to-surface-light/95
-      dark:from-background-dark dark:via-[#1a1f2e] dark:to-surface-dark/95
-      transition-colors-transform duration-600 ease-smooth">
+      dark:from-background-dark dark:via-[#1a1f2e] dark:to-surface-dark/95">
       
       {/* Efectos de fondo */}
       <div className="bg-gradient-blur bg-gradient-primary w-[500px] h-[500px] top-0 left-0 opacity-10 dark:opacity-5" />
