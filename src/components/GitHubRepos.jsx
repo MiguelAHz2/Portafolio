@@ -223,7 +223,9 @@ const GitHubRepos = () => {
         } else if (err.message.includes('403')) {
           errorMessage = 'Límite de requests excedido. Intenta más tarde.';
         } else if (err.message.includes('401')) {
-          errorMessage = 'Error de autenticación. Verifica tu token de GitHub.';
+          errorMessage = 'Error de autenticación. Verifica tu token de GitHub en Vercel.';
+        } else if (err.message.includes('Bad credentials')) {
+          errorMessage = 'Token de GitHub inválido. Genera un nuevo token para producción.';
         }
         
         setError(errorMessage);
