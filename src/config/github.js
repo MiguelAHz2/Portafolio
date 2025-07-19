@@ -2,8 +2,8 @@
 // Obtén tu token desde: https://github.com/settings/tokens
 
 export const GITHUB_CONFIG = {
-  USERNAME: import.meta.env.VITE_GITHUB_USERNAME || 'MiguelAHz2', // Reemplazar con tu username de GitHub
-  TOKEN: import.meta.env.VITE_GITHUB_TOKEN || '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', // Opcional: para más requests por hora
+  USERNAME: import.meta.env.VITE_GITHUB_USERNAME || 'MiguelAHz2',
+  TOKEN: import.meta.env.VITE_GITHUB_TOKEN || null, // Solo usar variables de entorno
   API_BASE_URL: 'https://api.github.com',
 };
 
@@ -31,7 +31,7 @@ export const getGitHubHeaders = () => {
   };
   
   if (GITHUB_CONFIG.TOKEN) {
-    headers['Authorization'] = `token ${GITHUB_CONFIG.TOKEN}`;
+    headers['Authorization'] = `Bearer ${GITHUB_CONFIG.TOKEN}`; // Cambiar a Bearer token
   }
   
   return headers;

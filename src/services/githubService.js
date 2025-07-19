@@ -30,26 +30,41 @@ export const fetchGitHubRepos = async (limit = 6, sort = 'updated') => {
     console.log('🔍 Configuración GitHub:', {
       username: GITHUB_CONFIG.USERNAME,
       hasToken: !!GITHUB_CONFIG.TOKEN,
-      tokenLength: GITHUB_CONFIG.TOKEN?.length || 0
+      tokenLength: GITHUB_CONFIG.TOKEN?.length || 0,
+      tokenPrefix: GITHUB_CONFIG.TOKEN?.substring(0, 10) + '...' || 'NO_TOKEN'
     });
 
     const url = `${GITHUB_ENDPOINTS.REPOS(GITHUB_CONFIG.USERNAME)}?sort=${sort}&per_page=${limit}`;
     console.log('🌐 URL de la petición:', url);
 
     const headers = getGitHubHeaders();
-    console.log('📋 Headers:', headers);
+    console.log('📋 Headers:', {
+      ...headers,
+      Authorization: headers.Authorization ? 'Bearer [TOKEN_OCULTO]' : 'NO_AUTH'
+    });
 
     const response = await fetch(url, { headers });
 
     console.log('📡 Respuesta del servidor:', {
       status: response.status,
       statusText: response.statusText,
-      ok: response.ok
+      ok: response.ok,
+      headers: Object.fromEntries(response.headers.entries())
     });
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error('❌ Error response body:', errorText);
+      
+      // Manejo específico de errores de autenticación
+      if (response.status === 401) {
+        throw new Error('Token de GitHub inválido o expirado. Verifica tu token en Vercel.');
+      } else if (response.status === 403) {
+        throw new Error('Límite de requests excedido. Intenta más tarde o verifica tu token.');
+      } else if (response.status === 404) {
+        throw new Error(`Usuario '${GITHUB_CONFIG.USERNAME}' no encontrado. Verifica tu username.`);
+      }
+      
       throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
 
