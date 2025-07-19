@@ -99,3 +99,109 @@
   @apply bg-gray-400 dark:bg-gray-600;
 }
 
+/* Animaciones personalizadas para móviles */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Clases de utilidad para animaciones */
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.5s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s ease-out forwards;
+}
+
+/* Animaciones para elementos que aparecen con delay */
+.animate-stagger-1 { animation-delay: 0.1s; }
+.animate-stagger-2 { animation-delay: 0.2s; }
+.animate-stagger-3 { animation-delay: 0.3s; }
+.animate-stagger-4 { animation-delay: 0.4s; }
+.animate-stagger-5 { animation-delay: 0.5s; }
+
+/* Optimizaciones para dispositivos móviles */
+@media (max-width: 768px) {
+  .animate-fade-in-up {
+    animation-duration: 0.4s;
+  }
+  
+  .animate-fade-in {
+    animation-duration: 0.3s;
+  }
+  
+  /* Reducir la intensidad de las animaciones en móviles */
+  .hover\:scale-105:hover {
+    transform: scale(1.02);
+  }
+  
+  .hover\:scale-110:hover {
+    transform: scale(1.05);
+  }
+  
+  .hover\:-translate-y-1:hover {
+    transform: translateY(-2px);
+  }
+}
+

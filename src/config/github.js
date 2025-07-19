@@ -3,7 +3,7 @@
 
 export const GITHUB_CONFIG = {
   USERNAME: import.meta.env.VITE_GITHUB_USERNAME || 'MiguelAHz2', // Reemplazar con tu username de GitHub
-  TOKEN: import.meta.env.VITE_GITHUB_TOKEN || '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', // Opcional: para más requests por hora
+  TOKEN: import.meta.env.VITE_GITHUB_TOKEN || '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', // Opcional: para más requests por hora
   API_BASE_URL: 'https://api.github.com',
 };
 

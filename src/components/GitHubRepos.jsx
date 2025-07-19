@@ -166,6 +166,20 @@ const GitHubRepos = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isChangingView, setIsChangingView] = useState(false);
+
+  // Detectar si es dispositivo móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const loadRepos = async () => {
@@ -245,7 +259,46 @@ const GitHubRepos = () => {
     });
   };
 
+  // Función optimizada para manejar el cambio de estado
+  const handleShowAllToggle = () => {
+    // En móviles, usar un timeout para evitar problemas de renderizado
+    if (isMobile) {
+      setIsChangingView(true);
+      // Aumentar el delay para móviles
+      setTimeout(() => {
+        setShowAll(!showAll);
+        setTimeout(() => {
+          setIsChangingView(false);
+        }, 300); // Aumentar el tiempo de espera
+      }, 200); // Aumentar el delay inicial
+    } else {
+      setShowAll(!showAll);
+    }
+  };
 
+  // Efecto para manejar el cambio de vista
+  useEffect(() => {
+    if (isChangingView) {
+      // Forzar un re-render después del cambio
+      const timer = setTimeout(() => {
+        setIsChangingView(false);
+      }, 500); // Aumentar el tiempo total
+      
+      return () => clearTimeout(timer);
+    }
+  }, [showAll, isChangingView]);
+
+  // Efecto para reinicializar el estado en móviles
+  useEffect(() => {
+    if (isMobile && showAll) {
+      // En móviles, reiniciar el estado showAll al cambiar de vista
+      const timer = setTimeout(() => {
+        setShowAll(false);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isMobile]);
 
   if (loading) {
     return (
@@ -282,109 +335,211 @@ const GitHubRepos = () => {
   // Filtrar repositorios para mostrar
   const displayRepos = showAll ? repos : repos.slice(0, 6);
 
+  // Configuración de animaciones optimizada para móviles
+  const mobileAnimationConfig = {
+    containerVariants: isMobile ? {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 }
+    } : containerVariants,
+    cardVariants: isMobile ? {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 }
+    } : cardVariants,
+    viewportConfig: isMobile ? { once: true, amount: 0.1 } : { once: false, amount: 0.2 }
+  };
+
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, amount: 0.2 }}
+    <div
+      key={`github-repos-${showAll}-${isMobile}`}
       className="space-y-6"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Indicador de carga para cambio de vista en móviles */}
+      {isChangingView && isMobile && (
+        <div className="text-center py-4 animate-fade-in">
+          <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-500"></div>
+          <p className="mt-2 text-sm text-text-muted dark:text-gray-400">Cargando...</p>
+        </div>
+      )}
+
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-700 ease-in-out ${isChangingView && isMobile ? 'opacity-50 scale-95' : 'opacity-100 scale-100'}`}>
         {displayRepos.map((repo, index) => (
-          <motion.div
-            key={repo.id}
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            whileHover={hoverScale}
-            transition={smoothTransition}
-          >
-            <GlassmorphismCard
-              variant="default"
-              className="h-full p-6 hover:shadow-lg transition-all duration-300"
+          isMobile ? (
+            // Versión con animaciones CSS suaves para móviles
+            <div 
+              key={`${repo.id}-${showAll}`} 
+              className="transition-all duration-500 ease-in-out animate-fade-in-up"
+              style={{
+                animationDelay: `${index * 100}ms`,
+                animationFillMode: 'both'
+              }}
             >
-              {/* Header del repositorio */}
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-text-light dark:text-text-dark mb-2 line-clamp-1">
-                    {repo.name}
-                  </h3>
-                  <p className="text-sm text-text-muted dark:text-gray-400 line-clamp-2">
-                    {repo.description || 'Sin descripción'}
-                  </p>
-                </div>
-                <FaGithub className="w-5 h-5 text-text-muted dark:text-gray-400 flex-shrink-0 ml-2" />
-              </div>
-
-                          {/* Lenguajes */}
-            {repo.languages && repo.languages.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
-                {repo.languages.map((language) => (
-                  <motion.span
-                    key={language}
-                    whileHover={{ scale: 1.05 }}
-                    transition={smoothTransition}
-                    className={`px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
-                    group hover:scale-105 transition-all duration-300 ${getTechBackground(language)}`}
-                  >
-                    {getTechIcon(language)}
-                    <span className="truncate text-text-light dark:text-text-dark font-medium">{language}</span>
-                  </motion.span>
-                ))}
-              </div>
-            )}
-
-              {/* Estadísticas */}
-              <div className="flex items-center justify-between text-sm text-text-muted dark:text-gray-400 mb-4">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-1">
-                    <FaStar className="w-3 h-3" />
-                    <span>{repo.stargazers_count}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <FaCodeBranch className="w-3 h-3" />
-                    <span>{repo.forks_count}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <FaEye className="w-3 h-3" />
-                    <span>{repo.watchers_count}</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1">
-                  <FaCalendar className="w-3 h-3" />
-                  <span>{formatDate(repo.updated_at)}</span>
-                </div>
-              </div>
-
-              {/* Botón de enlace */}
-              <ModernButton
-                variant="outline"
-                size="sm"
-                onClick={() => window.open(repo.html_url, '_blank')}
-                className="w-full"
+              <GlassmorphismCard
+                variant="default"
+                className="h-full p-6 hover:shadow-lg transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
               >
-                Ver en GitHub
-              </ModernButton>
-            </GlassmorphismCard>
-          </motion.div>
+                {/* Header del repositorio */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-text-light dark:text-text-dark mb-2 line-clamp-1">
+                      {repo.name}
+                    </h3>
+                    <p className="text-sm text-text-muted dark:text-gray-400 line-clamp-2">
+                      {repo.description || 'Sin descripción'}
+                    </p>
+                  </div>
+                  <FaGithub className="w-5 h-5 text-text-muted dark:text-gray-400 flex-shrink-0 ml-2 transition-transform duration-300 hover:scale-110" />
+                </div>
+
+                {/* Lenguajes */}
+                {repo.languages && repo.languages.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
+                    {repo.languages.map((language, langIndex) => (
+                      <span
+                        key={language}
+                        className={`px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
+                        transition-all duration-300 transform hover:scale-105 hover:translate-y-[-2px] ${getTechBackground(language)}`}
+                        style={{
+                          animationDelay: `${(index * 100) + (langIndex * 50)}ms`
+                        }}
+                      >
+                        {getTechIcon(language)}
+                        <span className="truncate text-text-light dark:text-text-dark font-medium">{language}</span>
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Estadísticas */}
+                <div className="flex items-center justify-between text-sm text-text-muted dark:text-gray-400 mb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-1 transition-transform duration-300 hover:scale-110">
+                      <FaStar className="w-3 h-3" />
+                      <span>{repo.stargazers_count}</span>
+                    </div>
+                    <div className="flex items-center gap-1 transition-transform duration-300 hover:scale-110">
+                      <FaCodeBranch className="w-3 h-3" />
+                      <span>{repo.forks_count}</span>
+                    </div>
+                    <div className="flex items-center gap-1 transition-transform duration-300 hover:scale-110">
+                      <FaEye className="w-3 h-3" />
+                      <span>{repo.watchers_count}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 transition-transform duration-300 hover:scale-110">
+                    <FaCalendar className="w-3 h-3" />
+                    <span>{formatDate(repo.updated_at)}</span>
+                  </div>
+                </div>
+
+                {/* Botón de enlace */}
+                <ModernButton
+                  variant="outline"
+                  size="sm"
+                  onClick={() => window.open(repo.html_url, '_blank')}
+                  className="w-full transition-all duration-300 transform hover:scale-105 hover:shadow-md"
+                >
+                  Ver en GitHub
+                </ModernButton>
+              </GlassmorphismCard>
+            </div>
+          ) : (
+            // Versión con animaciones para desktop
+            <motion.div
+              key={repo.id}
+              variants={mobileAnimationConfig.cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={mobileAnimationConfig.viewportConfig}
+              whileHover={hoverScale}
+              transition={smoothTransition}
+            >
+              <GlassmorphismCard
+                variant="default"
+                className="h-full p-6 hover:shadow-lg transition-all duration-300"
+              >
+                {/* Header del repositorio */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-text-light dark:text-text-dark mb-2 line-clamp-1">
+                      {repo.name}
+                    </h3>
+                    <p className="text-sm text-text-muted dark:text-gray-400 line-clamp-2">
+                      {repo.description || 'Sin descripción'}
+                    </p>
+                  </div>
+                  <FaGithub className="w-5 h-5 text-text-muted dark:text-gray-400 flex-shrink-0 ml-2" />
+                </div>
+
+                {/* Lenguajes */}
+                {repo.languages && repo.languages.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
+                    {repo.languages.map((language) => (
+                      <motion.span
+                        key={language}
+                        whileHover={{ scale: 1.05 }}
+                        transition={smoothTransition}
+                        className={`px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
+                        group hover:scale-105 transition-all duration-300 ${getTechBackground(language)}`}
+                      >
+                        {getTechIcon(language)}
+                        <span className="truncate text-text-light dark:text-text-dark font-medium">{language}</span>
+                      </motion.span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Estadísticas */}
+                <div className="flex items-center justify-between text-sm text-text-muted dark:text-gray-400 mb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-1">
+                      <FaStar className="w-3 h-3" />
+                      <span>{repo.stargazers_count}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <FaCodeBranch className="w-3 h-3" />
+                      <span>{repo.forks_count}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <FaEye className="w-3 h-3" />
+                      <span>{repo.watchers_count}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <FaCalendar className="w-3 h-3" />
+                    <span>{formatDate(repo.updated_at)}</span>
+                  </div>
+                </div>
+
+                {/* Botón de enlace */}
+                <ModernButton
+                  variant="outline"
+                  size="sm"
+                  onClick={() => window.open(repo.html_url, '_blank')}
+                  className="w-full"
+                >
+                  Ver en GitHub
+                </ModernButton>
+              </GlassmorphismCard>
+            </motion.div>
+          )
         ))}
       </div>
 
       {/* Botón para mostrar más/menos repositorios */}
       {repos.length > 6 && (
-        <div className="text-center">
+        <div className="text-center animate-fade-in-up" style={{ animationDelay: '600ms' }}>
           <ModernButton
             variant="outline"
             size="lg"
-            onClick={() => setShowAll(!showAll)}
+            onClick={handleShowAllToggle}
+            disabled={isChangingView}
+            className="transition-all duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg hover:-translate-y-1"
           >
             {showAll ? 'Mostrar Menos' : `Mostrar Todos (${repos.length})`}
           </ModernButton>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 };
 

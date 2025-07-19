@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { 
   FaGithub, 
   FaExternalLinkAlt,
@@ -132,19 +133,50 @@ const getTechBackground = (tech) => {
 };
 
 const Projects = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detectar si es dispositivo móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Configuración de animaciones optimizada para móviles
+  const mobileAnimationConfig = {
+    containerVariants: isMobile ? {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 }
+    } : containerVariants,
+    titleVariants: isMobile ? {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 }
+    } : titleVariants,
+    cardVariants: isMobile ? {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 }
+    } : cardVariants,
+    viewportConfig: isMobile ? { once: true, amount: 0.1 } : { once: false, amount: 0.2 }
+  };
+
   return (
     <section id="projects" className="py-16 sm:py-20 relative bg-gradient-to-b from-surface-light/95 via-background-light to-surface-light/95
       dark:from-surface-dark/95 dark:via-[#1a1f2e] dark:to-surface-dark/95
       transition-colors duration-600">
       <motion.div
-        variants={containerVariants}
+        variants={mobileAnimationConfig.containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={mobileAnimationConfig.viewportConfig}
         className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12"
       >
         <motion.h2
-          variants={titleVariants}
+          variants={mobileAnimationConfig.titleVariants}
           className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 sm:mb-14 text-text-light dark:text-text-dark"
         >
           <GradientText gradient="from-indigo-500 via-purple-500 to-pink-500">
@@ -153,84 +185,199 @@ const Projects = () => {
         </motion.h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {projects.map((project) => (
-            <motion.div
-              key={project.title}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-              whileHover={hoverScale}
-              transition={smoothTransition}
-              className="group"
-            >
-              <GlassmorphismCard
-                variant="default"
-                className="h-full flex flex-col"
+          {projects.map((project, index) => (
+            isMobile ? (
+              // Versión simplificada para móviles con animaciones CSS
+              <div 
+                key={project.title} 
+                className="group animate-fade-in-up"
+                style={{
+                  animationDelay: `${index * 150}ms`,
+                  animationFillMode: 'both'
+                }}
               >
-                {/* Contenedor de la imagen */}
-                <div className="relative overflow-hidden rounded-lg mb-4 group">
-                  {/* Contenedor de la imagen con proporción fija */}
-                  <div className={`relative ${project.title === "Próximamente" ? "h-48" : "aspect-[16/9]"} overflow-hidden`}>
-                    {project.title === "Próximamente" ? (
-                      <div className="w-full h-full bg-gradient-to-br from-primary-500/5 to-secondary-500/5 
-                        dark:from-primary-400/5 dark:to-secondary-400/5 flex items-center justify-center relative overflow-hidden">
-                        <motion.div
-                          animate={{
-                            y: [0, -5, 0],
-                            opacity: [0.9, 1, 0.9]
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                          }}
-                          className="absolute inset-0 flex items-center justify-center"
-                        >
-                          <div className="relative">
-                            {/* Línea circular exterior */}
-                            <div className="w-44 h-44 rounded-full border border-secondary-light/10 
-                              dark:border-secondary-dark/10" />
-                            
-                            {/* Arco giratorio */}
-                            <motion.div 
-                              className="absolute inset-0 w-44 h-44"
-                              animate={{
-                                rotate: 360
-                              }}
-                              transition={{
-                                duration: 8,
-                                repeat: Infinity,
-                                ease: "linear"
-                              }}
-                            >
-                              <div className="w-full h-full rounded-full border-2 border-transparent
-                                border-t-secondary-light/30 dark:border-t-secondary-dark/30" />
-                            </motion.div>
+                <GlassmorphismCard
+                  variant="default"
+                  className="h-full flex flex-col transition-all duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-2"
+                >
+                  {/* Contenedor de la imagen */}
+                  <div className="relative overflow-hidden rounded-lg mb-4 group">
+                    {/* Contenedor de la imagen con proporción fija */}
+                    <div className={`relative ${project.title === "Próximamente" ? "h-48" : "aspect-[16/9]"} overflow-hidden`}>
+                      {project.title === "Próximamente" ? (
+                        <div className="w-full h-full bg-gradient-to-br from-primary-500/5 to-secondary-500/5 
+                          dark:from-primary-400/5 dark:to-secondary-400/5 flex items-center justify-center relative overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="relative animate-pulse">
+                              {/* Línea circular exterior */}
+                              <div className="w-44 h-44 rounded-full border border-secondary-light/10 
+                                dark:border-secondary-dark/10" />
+                              
+                              {/* Círculo central con efecto minimalista */}
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-36 h-36 rounded-full bg-white/5 dark:bg-black/5 backdrop-blur-sm
+                                flex items-center justify-center border border-white/10 dark:border-white/5">
+                                  <span className="text-xl font-light tracking-wide text-secondary-light/70
+                                  dark:text-secondary-dark/70 italic">
+                                    Muy pronto...
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover object-center transform rounded-lg transition-transform duration-500 hover:scale-110"
+                        />
+                      )}
+                      
+                      {/* Overlay con gradiente y contenido */}
+                      {project.title !== "Próximamente" && (
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/40
+                          opacity-0 group-hover:opacity-100 transition-all duration-500">
+                          <div className="absolute inset-0 p-4 sm:p-6 flex flex-col transform translate-y-4 
+                            group-hover:translate-y-0 transition-transform duration-500 justify-end">
+                            <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                              <h3 className="text-sm font-bold text-white mb-1.5">
+                                {project.title}
+                              </h3>
+                              <p className="text-xs text-gray-200 leading-relaxed
+                                overflow-y-auto max-h-[60px]
+                                scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent 
+                                hover:scrollbar-thumb-white/30 pr-1">
+                                {project.description}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-                            {/* Círculo central con efecto minimalista */}
-                            <div className="absolute inset-0 flex items-center justify-center">
+                  {/* Contenido del proyecto */}
+                  <div className="flex-1 flex flex-col">
+                    <h3 className="text-xl font-semibold text-text-light dark:text-text-dark mb-2">
+                      {project.title}
+                    </h3>
+                    <p className="text-text-muted dark:text-gray-400 text-sm mb-4 flex-1">
+                      {project.description}
+                    </p>
+
+                    {/* Sección de tecnologías */}
+                    {project.technologies.length > 0 && project.title !== "Próximamente" && (
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
+                        {project.technologies.map((tech, techIndex) => (
+                          <span
+                            key={tech}
+                            className={`px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
+                            transition-all duration-300 transform hover:scale-105 hover:translate-y-[-2px] ${getTechBackground(tech)}`}
+                            style={{
+                              animationDelay: `${(index * 150) + (techIndex * 50)}ms`
+                            }}
+                          >
+                            {getTechIcon(tech)}
+                            <span className="truncate text-text-light dark:text-text-dark font-medium">{tech}</span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Botones de acción */}
+                    {project.title !== "Próximamente" && (
+                      <div className="flex gap-2 mt-auto">
+                        <ModernButton
+                          variant="primary"
+                          size="sm"
+                          icon={FaExternalLinkAlt}
+                          onClick={() => window.open(project.live, '_blank')}
+                          className="flex-1 transition-all duration-300 transform hover:scale-105 hover:shadow-md"
+                        >
+                          Ver Proyecto
+                        </ModernButton>
+                        <ModernButton
+                          variant="outline"
+                          size="sm"
+                          icon={FaGithub}
+                          onClick={() => window.open(project.github, '_blank')}
+                          className="flex-1 transition-all duration-300 transform hover:scale-105 hover:shadow-md"
+                        >
+                          Ver Código
+                        </ModernButton>
+                      </div>
+                    )}
+                  </div>
+                </GlassmorphismCard>
+              </div>
+            ) : (
+              // Versión con animaciones para desktop
+              <motion.div
+                key={project.title}
+                variants={mobileAnimationConfig.cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={mobileAnimationConfig.viewportConfig}
+                whileHover={hoverScale}
+                transition={smoothTransition}
+                className="group"
+              >
+                <GlassmorphismCard
+                  variant="default"
+                  className="h-full flex flex-col"
+                >
+                  {/* Contenedor de la imagen */}
+                  <div className="relative overflow-hidden rounded-lg mb-4 group">
+                    {/* Contenedor de la imagen con proporción fija */}
+                    <div className={`relative ${project.title === "Próximamente" ? "h-48" : "aspect-[16/9]"} overflow-hidden`}>
+                      {project.title === "Próximamente" ? (
+                        <div className="w-full h-full bg-gradient-to-br from-primary-500/5 to-secondary-500/5 
+                          dark:from-primary-400/5 dark:to-secondary-400/5 flex items-center justify-center relative overflow-hidden">
+                          <motion.div
+                            animate={{
+                              y: [0, -5, 0],
+                              opacity: [0.9, 1, 0.9]
+                            }}
+                            transition={{
+                              duration: 3,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }}
+                            className="absolute inset-0 flex items-center justify-center"
+                          >
+                            <div className="relative">
+                              {/* Línea circular exterior */}
+                              <div className="w-44 h-44 rounded-full border border-secondary-light/10 
+                                dark:border-secondary-dark/10" />
+                              
+                              {/* Arco giratorio */}
                               <motion.div 
-                                className="w-36 h-36 rounded-full bg-white/5 dark:bg-black/5 backdrop-blur-sm
-                                flex items-center justify-center border border-white/10 dark:border-white/5"
+                                className="absolute inset-0 w-44 h-44"
                                 animate={{
-                                  boxShadow: [
-                                    "0 0 0 0 rgba(37, 99, 235, 0)",
-                                    "0 0 20px 2px rgba(37, 99, 235, 0.1)",
-                                    "0 0 0 0 rgba(37, 99, 235, 0)"
-                                  ]
+                                  rotate: 360
                                 }}
                                 transition={{
-                                  duration: 3,
+                                  duration: 8,
                                   repeat: Infinity,
-                                  ease: "easeInOut"
+                                  ease: "linear"
                                 }}
                               >
-                                <motion.span 
-                                className="text-xl font-light tracking-wide text-secondary-light/70
-                                dark:text-secondary-dark/70 italic"
+                                <div className="w-full h-full rounded-full border-2 border-transparent
+                                  border-t-secondary-light/30 dark:border-t-secondary-dark/30" />
+                              </motion.div>
+
+                              {/* Círculo central con efecto minimalista */}
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <motion.div 
+                                  className="w-36 h-36 rounded-full bg-white/5 dark:bg-black/5 backdrop-blur-sm
+                                  flex items-center justify-center border border-white/10 dark:border-white/5"
                                   animate={{
-                                    opacity: [0.7, 1, 0.7]
+                                    boxShadow: [
+                                      "0 0 0 0 rgba(37, 99, 235, 0)",
+                                      "0 0 20px 2px rgba(37, 99, 235, 0.1)",
+                                      "0 0 0 0 rgba(37, 99, 235, 0)"
+                                    ]
                                   }}
                                   transition={{
                                     duration: 3,
@@ -238,113 +385,126 @@ const Projects = () => {
                                     ease: "easeInOut"
                                   }}
                                 >
-                                Muy pronto...
-                                </motion.span>
-                              </motion.div>
+                                  <motion.span 
+                                    className="text-xl font-light tracking-wide text-secondary-light/70
+                                    dark:text-secondary-dark/70 italic"
+                                    animate={{
+                                      opacity: [0.7, 1, 0.7]
+                                    }}
+                                    transition={{
+                                      duration: 3,
+                                      repeat: Infinity,
+                                      ease: "easeInOut"
+                                    }}
+                                  >
+                                    Muy pronto...
+                                  </motion.span>
+                                </motion.div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        </div>
+                      ) : (
+                        <motion.img
+                          initial={{ scale: 1 }}
+                          whileHover={{ scale: 1.05 }}
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover object-center transform rounded-lg"
+                        />
+                      )}
+                      
+                      {/* Overlay con gradiente y contenido */}
+                      {project.title !== "Próximamente" && (
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/40
+                          opacity-0 group-hover:opacity-100 transition-all duration-500">
+                          <div className="absolute inset-0 p-4 sm:p-6 flex flex-col transform translate-y-4 
+                            group-hover:translate-y-0 transition-transform duration-500 justify-end">
+                            <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                              <h3 className="text-sm font-bold text-white mb-1.5">
+                                {project.title}
+                              </h3>
+                              <p className="text-xs text-gray-200 leading-relaxed
+                                overflow-y-auto max-h-[60px]
+                                scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent 
+                                hover:scrollbar-thumb-white/30 pr-1">
+                                {project.description}
+                              </p>
                             </div>
                           </div>
-                        </motion.div>
-                      </div>
-                    ) : (
-                      <motion.img
-                        initial={{ scale: 1 }}
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover object-center transform rounded-lg"
-                      />
-                    )}
-                    
-                    {/* Overlay con gradiente y contenido */}
-                    {project.title !== "Próximamente" && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/40
-                        opacity-0 group-hover:opacity-100 transition-all duration-500">
-                        <div className="absolute inset-0 p-4 sm:p-6 flex flex-col transform translate-y-4 
-                          group-hover:translate-y-0 transition-transform duration-500 justify-end">
-                          <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3 border border-white/10">
-                            <h3 className="text-sm font-bold text-white mb-1.5">
-                              {project.title}
-                            </h3>
-                            <p className="text-xs text-gray-200 leading-relaxed
-                              overflow-y-auto max-h-[60px]
-                              scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent 
-                              hover:scrollbar-thumb-white/30 pr-1">
-                              {project.description}
-                            </p>
-                          </div>
                         </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Contenido del proyecto */}
+                  <div className="flex-1 flex flex-col">
+                    <h3 className="text-xl font-semibold text-text-light dark:text-text-dark mb-2">
+                      {project.title}
+                    </h3>
+                    <p className="text-text-muted dark:text-gray-400 text-sm mb-4 flex-1">
+                      {project.description}
+                    </p>
+
+                    {/* Sección de tecnologías */}
+                    {project.technologies.length > 0 && project.title !== "Próximamente" && (
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
+                        {project.technologies.map((tech) => (
+                          <motion.span
+                            key={tech}
+                            whileHover={{ scale: 1.05 }}
+                            transition={smoothTransition}
+                            className={`px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
+                            group hover:scale-105 transition-all duration-300 ${getTechBackground(tech)}`}
+                          >
+                            {getTechIcon(tech)}
+                            <span className="truncate text-text-light dark:text-text-dark font-medium">{tech}</span>
+                          </motion.span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Botones de acción */}
+                    {project.title !== "Próximamente" && (
+                      <div className="flex gap-2 mt-auto">
+                        <ModernButton
+                          variant="primary"
+                          size="sm"
+                          icon={FaExternalLinkAlt}
+                          onClick={() => window.open(project.live, '_blank')}
+                          className="flex-1"
+                        >
+                          Ver Proyecto
+                        </ModernButton>
+                        <ModernButton
+                          variant="outline"
+                          size="sm"
+                          icon={FaGithub}
+                          onClick={() => window.open(project.github, '_blank')}
+                          className="flex-1"
+                        >
+                          Ver Código
+                        </ModernButton>
                       </div>
                     )}
                   </div>
-                </div>
-
-                {/* Contenido del proyecto */}
-                <div className="flex-1 flex flex-col">
-                  <h3 className="text-xl font-semibold text-text-light dark:text-text-dark mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-text-muted dark:text-gray-400 text-sm mb-4 flex-1">
-                    {project.description}
-                  </p>
-
-                  {/* Sección de tecnologías */}
-                  {project.technologies.length > 0 && project.title !== "Próximamente" && (
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
-                      {project.technologies.map((tech) => (
-                        <motion.span
-                          key={tech}
-                          whileHover={{ scale: 1.05 }}
-                          transition={smoothTransition}
-                          className={`px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
-                          group hover:scale-105 transition-all duration-300 ${getTechBackground(tech)}`}
-                        >
-                          {getTechIcon(tech)}
-                          <span className="truncate text-text-light dark:text-text-dark font-medium">{tech}</span>
-                        </motion.span>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Botones de acción */}
-                  {project.title !== "Próximamente" && (
-                    <div className="flex gap-2 mt-auto">
-                      <ModernButton
-                        variant="primary"
-                        size="sm"
-                        icon={FaExternalLinkAlt}
-                        onClick={() => window.open(project.live, '_blank')}
-                        className="flex-1"
-                      >
-                        Ver Proyecto
-                      </ModernButton>
-                      <ModernButton
-                        variant="outline"
-                        size="sm"
-                        icon={FaGithub}
-                        onClick={() => window.open(project.github, '_blank')}
-                        className="flex-1"
-                      >
-                        Ver Código
-                      </ModernButton>
-                    </div>
-                  )}
-                </div>
-              </GlassmorphismCard>
-            </motion.div>
+                </GlassmorphismCard>
+              </motion.div>
+            )
           ))}
         </div>
 
         {/* Sección de Repositorios de GitHub */}
         <motion.div
-          variants={containerVariants}
+          variants={mobileAnimationConfig.containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={mobileAnimationConfig.viewportConfig}
           className="mt-20"
         >
           <motion.h2
-            variants={titleVariants}
+            variants={mobileAnimationConfig.titleVariants}
             className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 sm:mb-14 text-text-light dark:text-text-dark"
           >
             <GradientText gradient="from-green-500 via-emerald-500 to-teal-500">
@@ -353,7 +513,7 @@ const Projects = () => {
           </motion.h2>
           
           <motion.p
-            variants={titleVariants}
+            variants={mobileAnimationConfig.titleVariants}
             className="text-center text-base sm:text-lg text-text-muted dark:text-gray-400 mb-12 max-w-3xl mx-auto"
           >
             Mis proyectos más recientes en GitHub, actualizados en tiempo real
