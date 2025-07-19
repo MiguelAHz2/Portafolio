@@ -2,8 +2,8 @@
 // Obtén tu token desde: https://github.com/settings/tokens
 
 export const GITHUB_CONFIG = {
-  USERNAME: 'tu-usuario-github', // Reemplazar con tu username de GitHub
-  TOKEN: 'tu-token-github', // Opcional: para más requests por hora
+  USERNAME: 'MiguelAHz2', // Reemplazar con tu username de GitHub
+  TOKEN: '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', // Opcional: para más requests por hora
   API_BASE_URL: 'https://api.github.com',
 };
 

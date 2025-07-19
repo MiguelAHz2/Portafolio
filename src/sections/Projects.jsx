@@ -88,10 +88,47 @@ const getTechIcon = (tech) => {
 
   return (
     <Icon 
-      className={`w-5 h-5 ${iconColors[tech] || ''} group-hover:text-secondary-light 
+      className={`w-4 h-4 ${iconColors[tech] || ''} group-hover:text-secondary-light 
       dark:group-hover:text-secondary-dark transition-colors duration-300`}
     />
   );
+};
+
+// Función para obtener el color de fondo específico de cada tecnología
+const getTechBackground = (tech) => {
+  const backgrounds = {
+    'Python': 'bg-blue-500/10 border-blue-500/20',
+    'React': 'bg-cyan-500/10 border-cyan-500/20',
+    'JavaScript': 'bg-yellow-500/10 border-yellow-500/20',
+    'TypeScript': 'bg-blue-600/10 border-blue-600/20',
+    'HTML': 'bg-orange-500/10 border-orange-500/20',
+    'CSS': 'bg-blue-500/10 border-blue-500/20',
+    'Node.js': 'bg-green-500/10 border-green-500/20',
+    'Django': 'bg-green-700/10 border-green-700/20',
+    'FastAPI': 'bg-teal-500/10 border-teal-500/20',
+    'Flask': 'bg-gray-500/10 border-gray-500/20',
+    'MongoDB': 'bg-green-500/10 border-green-500/20',
+    'PostgreSQL': 'bg-blue-600/10 border-blue-600/20',
+    'Tailwind CSS': 'bg-cyan-500/10 border-cyan-500/20',
+    'Material UI': 'bg-blue-500/10 border-blue-500/20',
+    'Git': 'bg-red-500/10 border-red-500/20',
+    'Docker': 'bg-blue-500/10 border-blue-500/20',
+    'Jupyter': 'bg-orange-500/10 border-orange-500/20',
+    'Jupyter Notebook': 'bg-orange-500/10 border-orange-500/20',
+    'Vue': 'bg-green-500/10 border-green-500/20',
+    'Java': 'bg-orange-500/10 border-orange-500/20',
+    'C++': 'bg-blue-600/10 border-blue-600/20',
+    'C#': 'bg-green-500/10 border-green-500/20',
+    'PHP': 'bg-purple-500/10 border-purple-500/20',
+    'Ruby': 'bg-red-500/10 border-red-500/20',
+    'Go': 'bg-cyan-500/10 border-cyan-500/20',
+    'Rust': 'bg-orange-500/10 border-orange-500/20',
+    'Swift': 'bg-orange-500/10 border-orange-500/20',
+    'Kotlin': 'bg-purple-500/10 border-purple-500/20',
+    'Dart': 'bg-cyan-500/10 border-cyan-500/20',
+  };
+  
+  return backgrounds[tech] || 'bg-gray-500/10 border-gray-500/20';
 };
 
 const Projects = () => {
@@ -259,12 +296,11 @@ const Projects = () => {
                           key={tech}
                           whileHover={{ scale: 1.05 }}
                           transition={smoothTransition}
-                          className="px-2 sm:px-3 py-1 sm:py-1.5 bg-background-light dark:bg-background-dark 
-                          text-text-muted dark:text-gray-400 rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
-                          group hover:bg-opacity-80 dark:hover:bg-opacity-80 transition-all duration-300"
+                          className={`px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
+                          group hover:scale-105 transition-all duration-300 ${getTechBackground(tech)}`}
                         >
                           {getTechIcon(tech)}
-                          <span className="truncate">{tech}</span>
+                          <span className="truncate text-text-light dark:text-text-dark font-medium">{tech}</span>
                         </motion.span>
                       ))}
                     </div>

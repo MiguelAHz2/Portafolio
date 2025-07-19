@@ -40,11 +40,9 @@ export const fetchGitHubRepos = async (limit = 6, sort = 'updated') => {
 
     const repos = await response.json();
     
-    // Filtrar solo repositorios públicos y con descripción
+    // Filtrar repositorios públicos (menos restrictivo)
     return repos.filter(repo => 
-      !repo.fork && 
-      repo.description && 
-      !repo.private
+      !repo.private // Solo repositorios públicos
     ).slice(0, limit);
   } catch (error) {
     console.error('Error fetching GitHub repos:', error);
