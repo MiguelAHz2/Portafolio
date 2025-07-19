@@ -3,9 +3,17 @@
 
 export const GITHUB_CONFIG = {
   USERNAME: import.meta.env.VITE_GITHUB_USERNAME || 'MiguelAHz2', // Reemplazar con tu username de GitHub
-  TOKEN: import.meta.env.VITE_GITHUB_TOKEN || '', // Opcional: para más requests por hora
+  TOKEN: import.meta.env.VITE_GITHUB_TOKEN || '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', // Opcional: para más requests por hora
   API_BASE_URL: 'https://api.github.com',
 };
+
+// Debug: Verificar que las variables se cargan correctamente
+console.log('🔧 Variables de entorno cargadas:', {
+  VITE_GITHUB_USERNAME: import.meta.env.VITE_GITHUB_USERNAME,
+  VITE_GITHUB_TOKEN: import.meta.env.VITE_GITHUB_TOKEN ? 'TOKEN_PRESENTE' : 'TOKEN_FALTANTE',
+  USERNAME_FINAL: GITHUB_CONFIG.USERNAME,
+  TOKEN_FINAL: GITHUB_CONFIG.TOKEN ? 'TOKEN_PRESENTE' : 'TOKEN_FALTANTE'
+});
 
 // Endpoints útiles
 export const GITHUB_ENDPOINTS = {

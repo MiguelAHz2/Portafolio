@@ -89,8 +89,7 @@ const Navbar = () => {
     { id: 2, link: 'about', label: t('nav.about') },
     { id: 3, link: 'experience', label: 'Experiencia' },
     { id: 4, link: 'projects', label: t('nav.projects') },
-    { id: 5, link: 'testimonials', label: 'Testimonios' },
-    { id: 6, link: 'contact', label: t('nav.contact') },
+    { id: 5, link: 'contact', label: t('nav.contact') },
   ];
 
   return (

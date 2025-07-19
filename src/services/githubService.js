@@ -27,25 +27,42 @@ export const fetchGitHubUser = async () => {
  */
 export const fetchGitHubRepos = async (limit = 6, sort = 'updated') => {
   try {
-    const response = await fetch(
-      `${GITHUB_ENDPOINTS.REPOS(GITHUB_CONFIG.USERNAME)}?sort=${sort}&per_page=${limit}`,
-      {
-        headers: getGitHubHeaders(),
-      }
-    );
+    console.log('🔍 Configuración GitHub:', {
+      username: GITHUB_CONFIG.USERNAME,
+      hasToken: !!GITHUB_CONFIG.TOKEN,
+      tokenLength: GITHUB_CONFIG.TOKEN?.length || 0
+    });
+
+    const url = `${GITHUB_ENDPOINTS.REPOS(GITHUB_CONFIG.USERNAME)}?sort=${sort}&per_page=${limit}`;
+    console.log('🌐 URL de la petición:', url);
+
+    const headers = getGitHubHeaders();
+    console.log('📋 Headers:', headers);
+
+    const response = await fetch(url, { headers });
+
+    console.log('📡 Respuesta del servidor:', {
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok
+    });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ Error response body:', errorText);
       throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
 
     const repos = await response.json();
+    console.log('📦 Repositorios obtenidos:', repos.length);
     
     // Filtrar repositorios públicos (menos restrictivo)
-    return repos.filter(repo => 
-      !repo.private // Solo repositorios públicos
-    ).slice(0, limit);
+    const publicRepos = repos.filter(repo => !repo.private);
+    console.log('🔓 Repositorios públicos:', publicRepos.length);
+    
+    return publicRepos.slice(0, limit);
   } catch (error) {
-    console.error('Error fetching GitHub repos:', error);
+    console.error('❌ Error fetching GitHub repos:', error);
     throw error;
   }
 };
