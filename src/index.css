@@ -69,17 +69,17 @@
 
 /* Efectos de fondo y decorativos */
 .bg-gradient-blur {
-  @apply absolute opacity-30 dark:opacity-20 blur-3xl pointer-events-none;
+  @apply absolute opacity-40 dark:opacity-25 blur-3xl pointer-events-none;
 }
 
 .bg-gradient-primary {
-  @apply bg-gradient-to-tr from-secondary-light/30 to-accent-light/30 
-  dark:from-secondary-dark/30 dark:to-accent-dark/30;
+  @apply bg-gradient-to-tr from-indigo-500/40 to-purple-500/40 
+  dark:from-indigo-400/30 dark:to-purple-400/30;
 }
 
 .bg-gradient-secondary {
-  @apply bg-gradient-to-bl from-accent-light/30 to-secondary-light/30
-  dark:from-accent-dark/30 dark:to-secondary-dark/30;
+  @apply bg-gradient-to-bl from-purple-500/40 to-pink-500/40
+  dark:from-purple-400/30 dark:to-pink-400/30;
 }
 
 /* Scrollbar personalizada */

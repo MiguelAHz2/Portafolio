@@ -5,6 +5,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
+import { ModernButton } from '../components/ui';
 
 const Logo = () => (
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
@@ -25,7 +26,7 @@ const Logo = () => (
       strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="text-primary-500 dark:text-primary-400"
+      className="text-indigo-500 dark:text-indigo-400"
     />
 
     {/* Elementos de código */}
@@ -86,8 +87,10 @@ const Navbar = () => {
   const links = [
     { id: 1, link: 'home', label: t('nav.home') },
     { id: 2, link: 'about', label: t('nav.about') },
-    { id: 3, link: 'projects', label: t('nav.projects') },
-    { id: 4, link: 'contact', label: t('nav.contact') },
+    { id: 3, link: 'experience', label: 'Experiencia' },
+    { id: 4, link: 'projects', label: t('nav.projects') },
+    { id: 5, link: 'testimonials', label: 'Testimonios' },
+    { id: 6, link: 'contact', label: t('nav.contact') },
   ];
 
   return (
@@ -123,7 +126,7 @@ const Navbar = () => {
                 smooth
                 duration={500}
                 spy={true}
-                activeClass="!text-primary-500 dark:!text-primary-400 after:!w-full after:!bg-primary-500 dark:after:!bg-primary-400"
+                activeClass="!text-indigo-500 dark:!text-indigo-400 after:!w-full after:!bg-indigo-500 dark:after:!bg-indigo-400"
                 className="relative px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300
                 hover:text-gray-900 dark:hover:text-white transition-colors duration-200
                 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-900 
@@ -135,43 +138,33 @@ const Navbar = () => {
             ))}
             
             {/* Theme Toggle Desktop */}
-            <button
+            <ModernButton
+              variant="ghost"
+              size="sm"
+              icon={darkMode ? FiSun : FiMoon}
               onClick={toggleTheme}
-              className="ml-4 p-2 rounded-md text-gray-700 dark:text-gray-300
-              hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800
-              transition-all duration-200"
+              className="ml-4"
               aria-label={darkMode ? 'Activar modo claro' : 'Activar modo oscuro'}
-            >
-              {darkMode ? 
-                <FiSun className="w-5 h-5" /> : 
-                <FiMoon className="w-5 h-5" />
-              }
-            </button>
+            />
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex items-center md:hidden">
-            <button
+            <ModernButton
+              variant="ghost"
+              size="sm"
+              icon={darkMode ? FiSun : FiMoon}
               onClick={toggleTheme}
-              className="p-2 rounded-md text-gray-700 dark:text-gray-300
-              hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800
-              transition-all duration-200 mr-2"
+              className="mr-2"
               aria-label={darkMode ? 'Activar modo claro' : 'Activar modo oscuro'}
-            >
-              {darkMode ? 
-                <FiSun className="w-5 h-5" /> : 
-                <FiMoon className="w-5 h-5" />
-              }
-            </button>
-            <button
+            />
+            <ModernButton
+              variant="ghost"
+              size="sm"
+              icon={isOpen ? FaTimes : FaBars}
               onClick={toggleMenu}
-              className="p-2 rounded-md text-gray-700 dark:text-gray-300
-              hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800
-              transition-all duration-200"
               aria-label="Menú principal"
-            >
-              {isOpen ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
-            </button>
+            />
           </div>
 
           {/* Mobile Menu */}
@@ -193,7 +186,7 @@ const Navbar = () => {
                       duration={500}
                       onClick={closeMenu}
                       spy={true}
-                      activeClass="!text-primary-500 dark:!text-primary-400 after:!w-full after:!bg-primary-500 dark:after:!bg-primary-400"
+                      activeClass="!text-indigo-500 dark:!text-indigo-400 after:!w-full after:!bg-indigo-500 dark:after:!bg-indigo-400"
                       className="relative block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300
                       hover:text-gray-900 dark:hover:text-white transition-colors duration-200 rounded-md
                       after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-900 
@@ -213,4 +206,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

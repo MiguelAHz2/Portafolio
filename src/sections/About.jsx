@@ -29,6 +29,7 @@ import {
 } from 'react-icons/si';
 import { skills } from '../constants/portfolio';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { GradientText, GlassmorphismCard, AnimatedStats } from '../components/ui';
 import {
   containerVariants,
   titleVariants,
@@ -135,7 +136,9 @@ const About = () => {
             variants={titleVariants}
             className="section-title text-3xl sm:text-4xl lg:text-5xl"
           >
-            Sobre Mí
+            <GradientText gradient="from-indigo-500 via-purple-500 to-pink-500">
+              Sobre Mí
+            </GradientText>
           </motion.h2>
           <motion.div
             variants={descriptionVariants}
@@ -149,40 +152,72 @@ const About = () => {
           </motion.div>
         </div>
 
+        {/* Estadísticas animadas */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12"
+        >
+          <AnimatedStats
+            value={3}
+            label="Años de Experiencia"
+            icon={FaCode}
+            color="blue"
+          />
+          <AnimatedStats
+            value={15}
+            label="Proyectos Completados"
+            icon={FaServer}
+            color="purple"
+          />
+          <AnimatedStats
+            value={10}
+            label="Tecnologías Dominadas"
+            icon={FaTools}
+            color="green"
+          />
+        </motion.div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {skills.map((category, index) => {
             const CategoryIcon = getCategoryIcon(category.category);
             return (
-              <motion.div
+              <GlassmorphismCard
                 key={category.category}
-                variants={techCardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, amount: 0.3 }}
-                className="card p-4 sm:p-6 backdrop-blur-sm bg-opacity-60 hover:shadow-lg transition-all duration-300"
+                variant="default"
+                className="p-4 sm:p-6"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <CategoryIcon className="w-5 h-5 sm:w-6 sm:h-6 text-secondary-light dark:text-secondary-dark" />
-                  <h3 className="text-lg sm:text-xl font-semibold text-text-light dark:text-text-dark">
-                    {category.category}
-                  </h3>
-                </div>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {category.technologies.map((tech) => (
-                    <motion.span
-                      key={tech}
-                      whileHover={hoverScale}
-                      transition={smoothTransition}
-                      className="px-2 sm:px-3 py-1 sm:py-1.5 bg-background-light dark:bg-background-dark 
-                      text-text-muted dark:text-gray-400 rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
-                      group hover:bg-opacity-80 dark:hover:bg-opacity-80 transition-all duration-300"
-                    >
-                      {getTechIcon(tech)}
-                      <span className="truncate">{tech}</span>
-                    </motion.span>
-                  ))}
-                </div>
-              </motion.div>
+                <motion.div
+                  variants={techCardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: false, amount: 0.3 }}
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <CategoryIcon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500 dark:text-indigo-400" />
+                    <h3 className="text-lg sm:text-xl font-semibold text-text-light dark:text-text-dark">
+                      {category.category}
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                    {category.technologies.map((tech) => (
+                      <motion.span
+                        key={tech}
+                        whileHover={hoverScale}
+                        transition={smoothTransition}
+                        className="px-2 sm:px-3 py-1 sm:py-1.5 bg-white/10 dark:bg-black/10 
+                        text-text-muted dark:text-gray-400 rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2
+                        group hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-300"
+                      >
+                        {getTechIcon(tech)}
+                        <span className="truncate">{tech}</span>
+                      </motion.span>
+                    ))}
+                  </div>
+                </motion.div>
+              </GlassmorphismCard>
             );
           })}
         </div>
@@ -198,17 +233,14 @@ const About = () => {
             variants={titleVariants}
             className="text-xl sm:text-2xl font-semibold text-text-light dark:text-text-dark mb-6"
           >
-            Mi Enfoque
+            <GradientText gradient="from-green-600 to-emerald-600">
+              Mi Enfoque
+            </GradientText>
           </motion.h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-              whileHover={hoverScale}
-              transition={smoothTransition}
-              className="card p-6 hover:shadow-lg transition-all duration-300"
+            <GlassmorphismCard
+              variant="primary"
+              className="hover:shadow-2xl"
             >
               <h4 className="text-xl font-medium text-text-light dark:text-text-dark mb-2">
                 Frontend Moderno
@@ -216,15 +248,10 @@ const About = () => {
               <p className="text-text-muted dark:text-gray-400">
                 Especializado en React y su ecosistema, creando interfaces dinámicas y responsivas con JavaScript/TypeScript y herramientas modernas como Tailwind CSS.
               </p>
-            </motion.div>
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-              whileHover={hoverScale}
-              transition={smoothTransition}
-              className="card p-6 hover:shadow-lg transition-all duration-300"
+            </GlassmorphismCard>
+            <GlassmorphismCard
+              variant="secondary"
+              className="hover:shadow-2xl"
             >
               <h4 className="text-xl font-medium text-text-light dark:text-text-dark mb-2">
                 Backend Versátil
@@ -232,15 +259,10 @@ const About = () => {
               <p className="text-text-muted dark:text-gray-400">
                 Desarrollo de APIs y servicios con Python (Django, FastAPI, Flask) y Node.js. Experiencia con bases de datos SQL y NoSQL como PostgreSQL y MongoDB.
               </p>
-            </motion.div>
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-              whileHover={hoverScale}
-              transition={smoothTransition}
-              className="card p-6 hover:shadow-lg transition-all duration-300"
+            </GlassmorphismCard>
+            <GlassmorphismCard
+              variant="success"
+              className="hover:shadow-2xl"
             >
               <h4 className="text-xl font-medium text-text-light dark:text-text-dark mb-2">
                 DevOps y Herramientas
@@ -248,7 +270,7 @@ const About = () => {
               <p className="text-text-muted dark:text-gray-400">
                 Manejo de control de versiones con Git, automatización de procesos con Docker, y experiencia con herramientas de desarrollo como Postman y Jupyter Notebook.
               </p>
-            </motion.div>
+            </GlassmorphismCard>
           </div>
         </motion.div>
       </motion.div>

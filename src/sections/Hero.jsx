@@ -1,7 +1,10 @@
+// Hero component - Updated scroll functionality - FIXED VERSION 2024
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import { HiMail } from 'react-icons/hi';
 import { socialLinks, contactInfo } from '../constants/portfolio';
+import { GradientText, ModernButton, FloatingActionButton } from '../components/ui';
 import {
   containerVariants,
   titleVariants,
@@ -14,14 +17,49 @@ import {
 } from '../constants/animations';
 
 const Hero = () => {
+  // Función para scroll suave a secciones - Versión mejorada
+  const smoothScrollToSection = (sectionId) => {
+    try {
+      // Esperar un poco para asegurar que el DOM esté listo
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (!element) {
+          console.warn(`Elemento con id '${sectionId}' no encontrado`);
+          return;
+        }
+
+        const elementPosition = element.offsetTop;
+        const startPosition = window.pageYOffset;
+        const distance = elementPosition - startPosition;
+        const duration = 1000; // 1 segundo
+        let start = null;
+
+        const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+
+        const animation = (currentTime) => {
+          if (start === null) start = currentTime;
+          const timeElapsed = currentTime - start;
+          const progress = Math.min(timeElapsed / duration, 1);
+          const run = easeInOutCubic(progress);
+          window.scrollTo(0, startPosition + distance * run);
+          if (progress < 1) requestAnimationFrame(animation);
+        };
+
+        requestAnimationFrame(animation);
+      }, 100);
+    } catch (error) {
+      console.error('Error en smoothScrollToSection:', error);
+    }
+  };
+
   return (
     <section name="home" className="min-h-screen flex items-center justify-center relative overflow-hidden
       bg-gradient-to-b from-background-light via-background-light to-surface-light/95
       dark:from-background-dark dark:via-[#1a1f2e] dark:to-surface-dark/95">
       
       {/* Efectos de fondo */}
-      <div className="bg-gradient-blur bg-gradient-primary w-[500px] h-[500px] top-0 left-0 opacity-10 dark:opacity-5 hidden sm:block" />
-      <div className="bg-gradient-blur bg-gradient-secondary w-[500px] h-[500px] bottom-0 right-0 opacity-10 dark:opacity-5 hidden sm:block" />
+      <div className="bg-gradient-blur bg-gradient-primary w-[500px] h-[500px] top-0 left-0 opacity-15 dark:opacity-8 hidden sm:block" />
+      <div className="bg-gradient-blur bg-gradient-secondary w-[500px] h-[500px] bottom-0 right-0 opacity-15 dark:opacity-8 hidden sm:block" />
       
       {/* Bordes difuminados */}
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-surface-light/10 to-transparent backdrop-blur-[1px]
@@ -34,7 +72,7 @@ const Hero = () => {
         viewport={{ once: true, amount: 0.2 }}
         className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16 lg:py-20"
       >
-        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-16">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-16 min-h-[80vh]">
           {/* Contenido principal */}
           <motion.div 
             variants={fromLeftVariants}
@@ -45,20 +83,51 @@ const Hero = () => {
           >
             <motion.h1
               variants={titleVariants}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8"
             >
-              <span className="block text-text-light dark:text-text-dark">Hola, soy</span>
-              <span className="block text-secondary-light dark:text-secondary-dark mt-2">
+              <span className="block text-text-light dark:text-text-dark mb-3">Hola, soy</span>
+              <GradientText 
+                className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-relaxed pb-2"
+                gradient="from-indigo-500 via-purple-500 to-pink-500"
+                animate={true}
+              >
                 Miguel Alvarez
-              </span>
+              </GradientText>
             </motion.h1>
             
             <motion.p
               variants={descriptionVariants}
-              className="text-base sm:text-lg md:text-xl text-text-muted dark:text-gray-400 mb-6 sm:mb-8"
+              className="text-base sm:text-lg md:text-xl text-text-muted dark:text-gray-400 mb-8 sm:mb-10 mt-4"
             >
               Técnico en sistemas y estudiante de ingeniería de software. Programador en Javascript y Python.
             </motion.p>
+
+            {/* Botones de acción */}
+            <motion.div
+              variants={fromLeftVariants}
+              className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mb-8"
+            >
+              <ModernButton
+                variant="primary"
+                size="lg"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  smoothScrollToSection('projects');
+                }}
+              >
+                Ver Proyectos
+              </ModernButton>
+              <ModernButton
+                variant="outline"
+                size="lg"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  smoothScrollToSection('contact');
+                }}
+              >
+                Contactar
+              </ModernButton>
+            </motion.div>
 
             {/* Redes sociales */}
             <motion.div
@@ -155,7 +224,93 @@ const Hero = () => {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* Botón flotante de scroll */}
+      <ScrollToTopButton />
     </section>
+  );
+};
+
+// Componente para el botón de scroll to top
+const ScrollToTopButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    try {
+      if (isScrolling) return; // Evitar múltiples clicks
+      
+      setIsScrolling(true);
+      
+      const currentPosition = window.pageYOffset;
+      if (currentPosition <= 0) {
+        setIsScrolling(false);
+        return;
+      }
+      
+      const duration = 1000; // 1 segundo
+      let start = null;
+      
+      const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+      
+      const animation = (currentTime) => {
+        if (start === null) start = currentTime;
+        const timeElapsed = currentTime - start;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const easedProgress = easeInOutCubic(progress);
+        
+        const newPosition = currentPosition * (1 - easedProgress);
+        window.scrollTo(0, newPosition);
+        
+        if (progress < 1) {
+          requestAnimationFrame(animation);
+        } else {
+          setIsScrolling(false);
+        }
+      };
+      
+      requestAnimationFrame(animation);
+    } catch (error) {
+      console.error('Error en scrollToTop:', error);
+      setIsScrolling(false);
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ 
+        opacity: isVisible ? 1 : 0,
+        scale: isVisible ? 1 : 0
+      }}
+      transition={{ duration: 0.3 }}
+      className={`fixed bottom-8 right-8 z-50 ${!isVisible || isScrolling ? 'pointer-events-none' : ''}`}
+    >
+      <FloatingActionButton
+        variant="primary"
+        size="md"
+        onClick={scrollToTop}
+        disabled={!isVisible || isScrolling}
+        icon={({ className }) => (
+          <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        )}
+      />
+    </motion.div>
   );
 };
 
