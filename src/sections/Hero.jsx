@@ -2,9 +2,10 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
-import { HiMail } from 'react-icons/hi';
+import { HiMail, HiDownload } from 'react-icons/hi';
 import { socialLinks, contactInfo } from '../constants/portfolio';
 import { GradientText, ModernButton, FloatingActionButton } from '../components/ui';
+import { downloadCV } from '../utils/downloadCV';
 import {
   containerVariants,
   titleVariants,
@@ -126,6 +127,17 @@ const Hero = () => {
                 }}
               >
                 Contactar
+              </ModernButton>
+              <ModernButton
+                variant="secondary"
+                size="lg"
+                icon={HiDownload}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  downloadCV();
+                }}
+              >
+                Descargar CV
               </ModernButton>
             </motion.div>
 

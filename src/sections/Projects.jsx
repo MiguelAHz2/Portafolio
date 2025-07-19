@@ -27,6 +27,7 @@ import {
 } from 'react-icons/si';
 import { projects } from '../constants/portfolio';
 import { GradientText, GlassmorphismCard, ModernButton } from '../components/ui';
+import GitHubRepos from '../components/GitHubRepos';
 import {
   containerVariants,
   titleVariants,
@@ -297,6 +298,33 @@ const Projects = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* Sección de Repositorios de GitHub */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+          className="mt-20"
+        >
+          <motion.h2
+            variants={titleVariants}
+            className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 sm:mb-14 text-text-light dark:text-text-dark"
+          >
+            <GradientText gradient="from-green-500 via-emerald-500 to-teal-500">
+              Repositorios de GitHub
+            </GradientText>
+          </motion.h2>
+          
+          <motion.p
+            variants={titleVariants}
+            className="text-center text-base sm:text-lg text-text-muted dark:text-gray-400 mb-12 max-w-3xl mx-auto"
+          >
+            Mis proyectos más recientes en GitHub, actualizados en tiempo real
+          </motion.p>
+
+          <GitHubRepos />
+        </motion.div>
       </motion.div>
     </section>
   );
